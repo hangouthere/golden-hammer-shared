@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+  golden-hammer-shared:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ['npm', 'run', 'docker-compose']
+    volumes:
+      - .:/app
+      - ../../../general/nfg-util/:/nfg-util
+      - /dev/null:/app/.git # For git submodules
+      # - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - NODE_OPTIONS=--enable-source-maps --trace-warnings

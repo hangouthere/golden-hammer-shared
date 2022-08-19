@@ -7,11 +7,12 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
-  "prettier": "@nfg/util/.prettierrc.cjs",
+  "prettier": "@nfg/util/prettier",
   "scripts": {
     "predev": "npm run build",
     "clean": "rimraf ./dist",
-    "docker-compose": "npm i --force && echo \"Running in docker-compose... You should run interactively by attaching:\n\t\tdocker exec -it `hostname` npm run dev\" && tail -f /dev/null",
+    "predocker-compose": "mkdir -p ${NPM_CONFIG_PREFIX}/lib && npm link ../nfg-util && npm i",
+    "docker-compose": "echo \"Running in docker-compose... You should run interactively by attaching:\n\t\tdocker exec -it `hostname` npm run dev\" && tail -f /dev/null",
     "build": "npm run clean && concurrently -r 'npm:build:*'",
     "build:bundle": "NODE_ENV=production PLATFORM=node ENTRYPOINT=index.ts npx nfg-build",
     "build:types": "tsc --emitDeclarationOnly --declaration",
@@ -24,15 +25,9 @@
     "typecheck": "tsc --noEmit && echo \"No Type Errors!\""
   },
   "dependencies": {
-    "@chialab/esbuild-plugin-env": "^0.15.3",
-    "@chialab/esbuild-plugin-html": "^0.15.5",
-    "@nfg/util": "^0.0.2-2",
-    "@types/node": "^17.0.21",
-    "concurrently": "^7.0.0",
-    "esbuild": "^0.14.25",
-    "esbuild-plugin-sass": "^1.0.1",
-    "nodemon": "^2.0.15",
-    "rimraf": "^3.0.2",
-    "typescript": "^4.5.5"
+    "@nfg/util": "^0.0.2-5"
+  },
+  "devDependencies": {
+    "vitest": "^0.22.1"
   }
 }
