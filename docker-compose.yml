@@ -3,6 +3,6 @@ version: '3.7'
 services:
   golden-hammer-shared:
     image: nfg/golden-hammer-shared:latest
+    tty: true
     environment:
       - TERM=xterm-256color
-    tty: true
