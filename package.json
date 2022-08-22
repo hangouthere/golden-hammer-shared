@@ -9,11 +9,11 @@
   "type": "module",
   "prettier": "@nfg/util/prettier",
   "scripts": {
-    "predev": "npm i --force && npm run clean",
-    "predev-build": "npm i --force && npm run clean",
-    "preprod": "NODE_ENV=development npm i --force && npm run clean",
+    "predev": "npm i && npm run clean",
+    "predev-build": "npm i && npm run clean",
+    "preprod": "NODE_ENV=development npm i && npm run clean",
     "clean": "rimraf ./dist",
-    "withnfgutil": "mkdir -p ${NPM_CONFIG_PREFIX}/lib && NODE_ENV=development npm link ../nfg-util",
+    "withnfgutil": "npx -y link ../nfg-util && npm run dev",
     "docker-compose": "npm i && npx nfg-compose",
     "build": "npm run clean && concurrently -r 'npm:build:*'",
     "build:bundle": "NODE_ENV=production PLATFORM=node ENTRYPOINT=index.ts npx nfg-build",
@@ -27,6 +27,21 @@
     "typecheck": "tsc --noEmit && echo \"No Type Errors!\""
   },
   "dependencies": {
-    "@nfg/util": "^0.0.2-7"
+    "@chialab/esbuild-plugin-env": "^0.16.0",
+    "@chialab/esbuild-plugin-html": "^0.16.4",
+    "@nfg/util": "^0.0.2-7",
+    "@types/node": "^18.7.9",
+    "@typescript-eslint/eslint-plugin": "^5.34.0",
+    "@typescript-eslint/parser": "^5.34.0",
+    "concurrently": "^7.3.0",
+    "esbuild": "^0.14.54",
+    "esbuild-copy-static-files": "^0.1.0",
+    "esbuild-plugin-sass": "^1.0.1",
+    "eslint": "^8.22.0",
+    "nodemon": "^2.0.19",
+    "rimraf": "^3.0.2",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4",
+    "vitest": "^0.20.3"
   }
 }
