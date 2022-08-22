@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    command: ['npm', 'run', 'docker-compose']
+    command: sh -c "npm run withnfgutil && npm run docker-compose"
     volumes:
       - .:/app
       - ../../../general/nfg-util/:/nfg-util

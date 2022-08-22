@@ -11,8 +11,8 @@
   "scripts": {
     "predev": "npm run build",
     "clean": "rimraf ./dist",
-    "predocker-compose": "mkdir -p ${NPM_CONFIG_PREFIX}/lib && npm link ../nfg-util && npm i",
-    "docker-compose": "echo \"Running in docker-compose... You should run interactively by attaching:\n\t\tdocker exec -it `hostname` npm run dev\" && tail -f /dev/null",
+    "withnfgutil": "mkdir -p ${NPM_CONFIG_PREFIX}/lib && NODE_ENV=development npm link ../nfg-util",
+    "docker-compose": "npm i && echo \"Running in docker-compose... You should run interactively by attaching:\n\t\tdocker exec -it `hostname` npm run dev\" && tail -f /dev/null",
     "build": "npm run clean && concurrently -r 'npm:build:*'",
     "build:bundle": "NODE_ENV=production PLATFORM=node ENTRYPOINT=index.ts npx nfg-build",
     "build:types": "tsc --emitDeclarationOnly --declaration",
@@ -26,8 +26,5 @@
   },
   "dependencies": {
     "@nfg/util": "^0.0.2-5"
-  },
-  "devDependencies": {
-    "vitest": "^0.22.1"
   }
 }
