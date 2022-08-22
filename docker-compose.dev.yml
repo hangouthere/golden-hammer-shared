@@ -2,10 +2,7 @@ version: '3.7'
 
 services:
   golden-hammer-shared:
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    command: ['npm', 'run', 'docker-compose']
+    command: ['npm', 'run', 'dev']
     volumes:
       - .:/app
       - /dev/null:/app/.git # For git submodules

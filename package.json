@@ -9,10 +9,12 @@
   "type": "module",
   "prettier": "@nfg/util/prettier",
   "scripts": {
-    "predev": "npm run build",
+    "predev": "npm i --force && npm run clean",
+    "predev-build": "npm i --force && npm run clean",
+    "preprod": "NODE_ENV=development npm i --force && npm run clean",
     "clean": "rimraf ./dist",
     "withnfgutil": "mkdir -p ${NPM_CONFIG_PREFIX}/lib && NODE_ENV=development npm link ../nfg-util",
-    "docker-compose": "npm i && echo \"Running in docker-compose... You should run interactively by attaching:\n\t\tdocker exec -it `hostname` npm run dev\" && tail -f /dev/null",
+    "docker-compose": "npm i && npx nfg-compose",
     "build": "npm run clean && concurrently -r 'npm:build:*'",
     "build:bundle": "NODE_ENV=production PLATFORM=node ENTRYPOINT=index.ts npx nfg-build",
     "build:types": "tsc --emitDeclarationOnly --declaration",
@@ -25,6 +27,6 @@
     "typecheck": "tsc --noEmit && echo \"No Type Errors!\""
   },
   "dependencies": {
-    "@nfg/util": "^0.0.2-5"
+    "@nfg/util": "^0.0.2-7"
   }
 }
