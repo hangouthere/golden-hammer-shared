@@ -2,11 +2,11 @@ version: '3.7'
 
 services:
   golden-hammer-shared:
+    build:
+      target: development
     command: ['npm', 'run', 'dev']
     volumes:
-      - .:/app
-      - /dev/null:/app/.git # For git submodules
-      # - /app/node_modules
+      - .:/build
+      # - /build/node_modules
     environment:
-      - NODE_ENV=development
       - NODE_OPTIONS=--enable-source-maps --trace-warnings

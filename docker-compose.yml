@@ -2,12 +2,10 @@ version: '3.7'
 
 services:
   golden-hammer-shared:
+    image: nfg/golden-hammer-shared:latest
     build:
       context: .
       dockerfile: ./Dockerfile
-    image: nfg/golden-hammer-shared:latest
-    tty: true
-    command: 'npm run docker-compose'
     environment:
       - TERM=xterm-256color
-
+    tty: true

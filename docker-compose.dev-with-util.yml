@@ -2,12 +2,8 @@ version: '3.7'
 
 services:
   golden-hammer-shared:
-    command: ['npm', 'run', 'withnfgutil']
+    command: ['npm', 'run', 'dev:linked']
     volumes:
-      - .:/app
       - ../../../general/nfg-util/:/nfg-util
-      - /dev/null:/app/.git # For git submodules
+      # - /dev/null:/app/.git # For git submodules
       # - /app/node_modules
-    environment:
-      - NODE_ENV=development
-      - NODE_OPTIONS=--enable-source-maps --trace-warnings
