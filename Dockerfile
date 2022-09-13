@@ -1,5 +1,4 @@
-ARG BUILD_PATH=/build
-ARG RUN_PATH=/app
+ARG PATH_APP=/app
 
 ##########################################################################################################################################
 # Stage: Base
@@ -7,15 +6,14 @@ ARG RUN_PATH=/app
 
 FROM node:18.8.0-alpine3.15 AS base
 
-      # Import into Stage
-      ARG BUILD_PATH
-      ARG RUN_PATH
+  # Import into Stage
+  ARG PATH_APP
 
-      USER root
+  USER root
 
-      # Make necessary Directories, and chown them as node for dev build path
-      RUN mkdir -p $BUILD_PATH $RUN_PATH && \
-            chown node:node $BUILD_PATH $RUN_PATH
+  # Make necessary Directories, and chown them as node for dev build path
+  RUN mkdir -p $PATH_APP $RUN_PATH && \
+    chown node:node $PATH_APP $RUN_PATH
 
 ##########################################################################################################################################
 # Stage: Base Build OS
@@ -23,19 +21,19 @@ FROM node:18.8.0-alpine3.15 AS base
 
 FROM base AS build-base
 
-      ENV PYTHON=/usr/bin/python2
+  ENV PYTHON=/usr/bin/python2
 
-      # Node Compilation stuff
-      RUN apk add --no-cache \
-            g++ \
-            gcc \
-            git \
-            libgcc \
-            libstdc++ \
-            linux-headers \
-            make \
-            python3 \
-            sqlite
+  # Node Compilation stuff
+  RUN apk add --no-cache \
+    g++ \
+    gcc \
+    git \
+    libgcc \
+    libstdc++ \
+    linux-headers \
+    make \
+    python3 \
+    sqlite
 
 ##########################################################################################################################################
 # Stage: Development Environment
@@ -43,59 +41,59 @@ FROM base AS build-base
 
 FROM build-base AS development
 
-      # Import into Stage
-      ARG BUILD_PATH
+  # Import into Stage
+  ARG PATH_APP
 
-      ENV NODE_ENV=development
+  ENV NODE_ENV=development
 
-      WORKDIR ${BUILD_PATH}
+  WORKDIR ${PATH_APP}
 
-      USER node
+  USER node
 
-      COPY --chown=node:node . ./
+  COPY --chown=node:node . ./
 
-      RUN npm i
+  RUN npm i --verbose
 
-      CMD ["npm", "run", "docker-compose"]
+  CMD ["npx", "nfg-compose"]
 
 # ! FIXME: This was the original, but we're modifying while we figure out the build process
 
-FROM build-base AS developmentORIG
+# FROM build-base AS developmentORIG
 
-      # Import into Stage
-      ARG BUILD_PATH
+#   # Import into Stage
+#   ARG PATH_APP
 
-      ENV NODE_ENV=development
+#   ENV NODE_ENV=development
 
-      WORKDIR ${BUILD_PATH}
+#   WORKDIR ${PATH_APP}
 
-      # Fixes issue with image running as root, but npm script running as `node`
-      # See: comment block at bottom of this Stage
-      RUN npm config set home /home/node/
-      RUN npm config set cache /home/node/.npm
+#   # Fixes issue with image running as root, but npm script running as `node`
+#   # See: comment block at bottom of this Stage
+#   RUN npm config set home /home/node/
+#   RUN npm config set cache /home/node/.npm
 
-      COPY ./package*.json ./
+#   COPY ./package*.json ./
 
-      # legacy-peer-deps required because libs are dumb, not updating peers
-      RUN npm i --legacy-peer-deps
+#   # legacy-peer-deps required because libs are dumb, not updating peers
+#   RUN npm i --legacy-peer-deps
 
-      # Copy the source to allow development
-      COPY . ./
+#   # Copy the source to allow development
+#   COPY . ./
 
-      # At this point, source is built and owned by root inside the image,
-      # but mostly as a transition to the `production-build` Stage.
-      #
-      # It's important to point out the assumption that while developing,
-      # the volume mounted at /build will be owned by your host UID 1000,
-      # which causes npm to run as the user `node` inside the
-      # image (also UID 1000).
-      # See: https://docs.npmjs.com/cli/v8/using-npm/scripts#user
-      #
-      # Additionally, files must be owned by root for Bitbucket file transfers
-      # between docker build Stages, due to the way they manage userns
-      # See: https://github.com/moby/moby/issues/34645
+#   # At this point, source is built and owned by root inside the image,
+#   # but mostly as a transition to the `production-build` Stage.
+#   #
+#   # It's important to point out the assumption that while developing,
+#   # the volume mounted at /build will be owned by your host UID 1000,
+#   # which causes npm to run as the user `node` inside the
+#   # image (also UID 1000).
+#   # See: https://docs.npmjs.com/cli/v8/using-npm/scripts#user
+#   #
+#   # Additionally, files must be owned by root for Bitbucket file transfers
+#   # between docker build Stages, due to the way they manage userns
+#   # See: https://github.com/moby/moby/issues/34645
 
-      CMD ["npm", "run", "docker-compose"]
+#   CMD ["npm", "run", "docker-compose"]
 
 ##########################################################################################################################################
 # Stage: Production Build
@@ -104,13 +102,13 @@ FROM build-base AS developmentORIG
 FROM development AS production-build
 
       # Import into Stage
-      ARG BUILD_PATH
+      ARG PATH_APP
 
       ENV NODE_ENV=production
 
-      WORKDIR ${BUILD_PATH}
+      WORKDIR ${PATH_APP}
 
-      COPY --from=development ${BUILD_PATH} .
+      COPY --from=development ${PATH_APP} .
 
       # Re-build in Prod Mode
       RUN npm run clean
@@ -127,18 +125,17 @@ FROM development AS production-build
 FROM base AS production
 
       # Import into Stage
-      ARG BUILD_PATH
-      ARG RUN_PATH
+      ARG PATH_APP
 
       ENV NODE_ENV=production
 
-      WORKDIR ${RUN_PATH}
+      WORKDIR ${PATH_APP}
 
       # Copy package manifest and build from `production-build`
       COPY --chown=node:node ./package*.json ./
 
-      COPY --from=production-build --chown=node:node ${BUILD_PATH}/dist/ ./
-      COPY --from=production-build --chown=node:node ${BUILD_PATH}/node_modules ./node_modules
+      COPY --from=production-build --chown=node:node ${PATH_APP}/dist/ ./
+      COPY --from=production-build --chown=node:node ${PATH_APP}/node_modules ./node_modules
 
       RUN chown -R node:node /home/node
 

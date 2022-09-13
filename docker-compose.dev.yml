@@ -5,8 +5,5 @@ services:
     build:
       target: development
     command: ['npm', 'run', 'dev']
-    volumes:
-      - .:/build
-      # - /build/node_modules
     environment:
       - NODE_OPTIONS=--enable-source-maps --trace-warnings
