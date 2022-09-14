@@ -3,7 +3,7 @@ version: '3.7'
 services:
   golden-hammer-shared:
     volumes:
-      - ./.docker/.npmrc-localRegistry:/app/.npmrc
+      - ../.docker/.npmrc-localRegistry:/app/.npmrc
     networks:
       - nfg-util_registry
 
