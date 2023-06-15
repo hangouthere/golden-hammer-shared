@@ -1,13 +1,9 @@
 # golden-hammer-shared
 
-Shared types, functions, and utilities for all GH-related projects!
 
-## Start Dev
+TODO:
 
-docker-compose -f ./docker-compose.yml -f ./docker-compose.dev.yml up
+* Fill out this README :P
+* Update dockerfile to be cleaner
+* see if we can't move the .scripts stuff to bin scripts via nfg-util, reduces replication in sub projects
 
-
-
-## Start Prod
-
-docker-compose -f ./docker-compose.yml -f ./docker-compose.prod.yml up

@@ -2,10 +2,13 @@ version: '3.7'
 
 services:
   golden-hammer-shared:
-    image: nfg/golden-hammer-shared:latest
+    image: hangouthere/golden-hammer-shared:latest
     build:
       context: .
       dockerfile: ./Dockerfile
-    environment:
-      - TERM=xterm-256color
+    stdin_open: true
     tty: true
+    user: '1000'
+    working_dir: '/app'
+    volumes:
+      - .:/app

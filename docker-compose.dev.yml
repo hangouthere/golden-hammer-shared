@@ -2,10 +2,9 @@ version: '3.7'
 
 services:
   golden-hammer-shared:
-    build:
-      target: development
-    volumes:
-      - .:/build
-      # - /build/node_modules
+    container_name: golden-hammer-shared
+    command: npx hh-dev
     environment:
+      - NODE_ENV=development
+      - VERBOSE=1
       - NODE_OPTIONS=--enable-source-maps --trace-warnings
