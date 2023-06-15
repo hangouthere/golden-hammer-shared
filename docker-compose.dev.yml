@@ -2,7 +2,6 @@ version: '3.7'
 
 services:
   golden-hammer-shared:
-    container_name: golden-hammer-shared
     command: npx hh-dev
     environment:
       - NODE_ENV=development

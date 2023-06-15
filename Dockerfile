@@ -2,6 +2,8 @@ FROM node:18-alpine3.18
 
 ENV NODE_ENV=production
 
+# TODO: Determine if we actually need any/all of these dependencies
+
 RUN apk add --no-cache \
   g++ \
   gcc \
