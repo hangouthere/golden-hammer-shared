@@ -1,25 +1,4 @@
-export declare namespace UserChatEventData {
-  interface EmoteMeta {
-    emoteId: string;
-    uri: string;
-  }
-
-  interface MessageBuffer {
-    // TODO: Consider UTF-8/etc extraction(s)?
-    type: 'word' | 'emote' | 'uri';
-    content: string;
-    meta?: UserChatEventData.EmoteMeta;
-  }
-}
-
-export interface UserChatEventData {
-  userName: string;
-  userId?: string; // Not on join/part
-  messageId?: string; // Not on join/part
-  roles?: string[]; // 'mod', 'sub', 'DiscordRoleName'
-  messageBuffers?: UserChatEventData.MessageBuffer[];
-  presence?: string | boolean; // indicates presence on a platform (ie, join|part, online|offline (as bool))
-}
+import { type UserChatEventData } from './UserChatEventData';
 
 export interface AdministrationEventData {
   userName: string; // Target userName

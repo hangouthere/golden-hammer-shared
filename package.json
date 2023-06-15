@@ -1,27 +1,24 @@
 {
   "name": "golden-hammer-shared",
-  "version": "0.1.0",
+  "version": "0.0.1-1",
   "description": "",
-  "author": "nfgCodex <nfg.codex@outlook.com>",
+  "author": "CodexHere <codexhere@outlook.com>",
   "license": "MIT",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
-  "prettier": "@nfg/util/prettier",
-  "scripts": {
-    "_nodemon": "nodemon -e tsx,ts,js,jsx,json,scss --watch ./src",
-    "_link:monitor:nfgutil": "nodemon --verbose -e '*' --watch /links/nfg-util --exec \"npm i @nfg/util\"",
-    "clean": "rimraf ./dist",
-    "predev": "npm i",
-    "predev-linked": "npm i",
-    "dev": "NODE_ENV=development npm run _nodemon -- --exec \"npm run typecheck && npm run build\"",
-    "dev-linked": "concurrently -r 'npm:_link:*' 'npm run dev'",
-    "build": "npm run clean && concurrently -r 'npm:build:*'",
-    "build:bundle": "NODE_ENV=production PLATFORM=node ENTRYPOINT=index.ts npx nfg-builder",
-    "build:types": "tsc --emitDeclarationOnly --declaration",
-    "typecheck": "tsc --noEmit && echo \"No Type Errors!\""
+  "prettier": "@hangouthere/util/prettier",
+  "engines": {
+    "node": "=18"
   },
-  "dependencies": {
-    "@nfg/util": "^0.0.2-7"
+  "bin": {
+    "gh-compose-dev-linked": "./.scripts/compose/dev-linked.sh",
+    "gh-compose-publish": "./.scripts/compose/publish.sh"
+  },
+  "devDependencies": {
+    "@hangouthere/util": "^0.0.1-1"
+  },
+  "publishConfig": {
+    "git-tag-version": false
   }
 }

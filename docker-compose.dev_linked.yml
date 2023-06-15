@@ -1,15 +1,30 @@
 version: '3.7'
 
 services:
+  change-vol-ownership:
+    image: node:18-alpine3.18
+    command: chown -R 1000:1000 /_triggers
+    group_add:
+      - '1000'
+    volumes:
+      - hh-triggers:/_triggers
+
   golden-hammer-shared:
-    command: ['npm', 'run', 'dev-linked']
+    command: npx gh-compose-dev-linked
     volumes:
       - ../.docker/.npmrc-localRegistry:/app/.npmrc
-      # Watchdir for nfg-util updates
-      - ../../../general/nfg-util/.trigger_nfg_util:/links/nfg-util/.trigger_nfg_util
+      - hh-triggers:/_triggers
+    depends_on:
+      # Wait for the ownership to change
+      change-vol-ownership:
+        condition: service_completed_successfully
     networks:
-      - nfg-util_registry
+      - hh-util_registry
+
+volumes:
+  hh-triggers:
+    external: true
 
 networks:
-  nfg-util_registry:
+  hh-util_registry:
     external: true
