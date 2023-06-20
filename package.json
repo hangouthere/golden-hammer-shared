@@ -12,12 +12,15 @@
     "node": "=18"
   },
   "bin": {
-    "ghs-dev-linked": "./.scripts/npm/ghs-dev-linked.sh",
+    "ghshared-dev-linked": "./.scripts/npm/ghshared-dev-linked.sh",
+    "ghsvc-util_triggerWatch": "./.scripts/npm/ghsvc-util_triggerWatch.sh",
+    "ghsvc-dev_run": "./.scripts/npm/ghsvc-dev_run.sh",
+    "ghsvc-dev": "./.scripts/npm/ghsvc-dev.sh",
+    "ghsvc-dev-debug": "./.scripts/npm/ghsvc-dev.sh debug",
+    "ghsvc-dev-linked": "./.scripts/npm/ghsvc-dev-linked.sh",
+    "ghsvc-dev-linked-debug": "./.scripts/npm/ghsvc-dev-linked.sh debug"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "@hangouthere/util": "^0.0.1-1"
-  },
-  "publishConfig": {
-    "git-tag-version": false
   }
 }
