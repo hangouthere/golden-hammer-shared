@@ -3,4 +3,4 @@
 nodemon \
     --verbose -e gh-shared \
     --watch /_triggers \
-    --exec "npm i -D golden-hammer-shared && npm ls golden-hammer-shared"
+    --exec "npm i --no-save golden-hammer-shared && npm ls golden-hammer-shared"

@@ -1,6 +1,6 @@
 {
   "name": "golden-hammer-shared",
-  "version": "0.0.1-1",
+  "version": "0.0.1-3",
   "description": "",
   "author": "CodexHere <codexhere@outlook.com>",
   "license": "MIT",
@@ -21,8 +21,5 @@
   },
   "peerDependencies": {
     "@hangouthere/util": "^0.0.1-1"
-  },
-  "devDependencies": {
-    "@hangouthere/util": "^0.0.1-16"
   }
 }
