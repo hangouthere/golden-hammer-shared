@@ -18,4 +18,4 @@ node \
   node_modules/moleculer/bin/moleculer-runner.mjs \
   --config moleculer.config.mjs \
   #--config dist/moleculer.config.mjs \
-  --repl --hot
+  --hot
