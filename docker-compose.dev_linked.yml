@@ -10,7 +10,7 @@ services:
       - hh-triggers:/_triggers
 
   golden-hammer-shared:
-    command: npx ghs-dev-linked
+    command: ./.scripts/npm/ghshared-dev-linked.sh
     volumes:
       - ../.docker/.npmrc-localRegistry:/app/.npmrc
       - hh-triggers:/_triggers

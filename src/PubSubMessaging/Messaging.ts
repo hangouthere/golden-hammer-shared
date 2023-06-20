@@ -3,7 +3,7 @@ import { type EventDataTypes } from './EventData';
 export interface Platform {
   name: 'twitch'; // | 'discord' | 'youtube'; // Platform name, maps to which services to rely on
   eventName: string; // Original Event Name as it was received from the platform directly
-  eventData: any; // Original Event Data as it was received from the platform directly
+  eventData: unknown; // Original Event Data as it was received from the platform directly
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,7 +19,7 @@ export const PossibleEventClassifications = [
   'UserChat.Presence'
 ] as const;
 
-export type EventClassification = typeof PossibleEventClassifications[number];
+export type EventClassification = (typeof PossibleEventClassifications)[number];
 export type EventClassifications = EventClassification[];
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ export type NormalizedMessagingEvent = {
   timestamp: number;
   platform: Platform;
   connectTarget: string; // ChannelName, Discord URI, etc?
-  eventClassification: typeof PossibleEventClassifications[number];
+  eventClassification: (typeof PossibleEventClassifications)[number];
   eventData: EventDataTypes;
 };
 
