@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Golden Hammer Shared Dev Script
+# Used to build the gh-shared lib by watching `hh-util` trigger file, and doing a local build
+
 NODE_ENV=development \
   npm i && \
   npx hh-util_clean && \
