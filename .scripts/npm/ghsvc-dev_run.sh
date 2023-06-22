@@ -14,8 +14,10 @@ DEBUG="$([ "$1" = "debug" ] && echo '-brk' || echo '')"
 #   npx hh-util_nodemon --exec "npx gh-util_fullBuild && npx ghsvc-dev_run"
 
 node \
-  --inspect${DEBUG}=0.0.0.0:9229 \
+  --inspect"${DEBUG}="0.0.0.0:9229 \
   node_modules/moleculer/bin/moleculer-runner.mjs \
   --config moleculer.config.mjs \
-  #--config dist/moleculer.config.mjs \
+  --mask="**/*.service.mjs" \
   --hot
+
+  #--config dist/moleculer.config.mjs \

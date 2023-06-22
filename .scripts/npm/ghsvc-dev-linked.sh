@@ -10,6 +10,6 @@ NODE_ENV=development \
   npx hh-util_clean && \
 npx concurrently \
   --names 'Link hh-util,Link gh-shared,Dev' \
-  'npx hh-util_triggerWatch' \
+  'npx hh-util_triggerWatch -D' \
   'npx ghsvc-util_triggerWatch' \
   "npx ghsvc-dev_run $@"
