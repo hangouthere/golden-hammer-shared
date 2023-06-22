@@ -1,0 +1,5 @@
+.npmrc
+.vscode
+.docker
+# compose files
+docker-compose*
