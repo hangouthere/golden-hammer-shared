@@ -1,4 +1,4 @@
-import { type EventDataTypes } from './EventData';
+import { type EventDataTypes } from './EventData.js';
 
 export interface Platform {
   name: 'twitch'; // | 'discord' | 'youtube'; // Platform name, maps to which services to rely on

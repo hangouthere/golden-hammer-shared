@@ -5,5 +5,5 @@ services:
     command: npx hh-dev
     environment:
       - NODE_ENV=development
-      - VERBOSE=1
       - NODE_OPTIONS=--enable-source-maps --trace-warnings
+      - VERBOSE=1

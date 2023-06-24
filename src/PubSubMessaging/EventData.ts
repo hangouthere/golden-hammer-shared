@@ -1,4 +1,4 @@
-import { type UserChatEventData } from './UserChatEventData';
+import { type UserChatEventData } from './UserChatEventData.js';
 
 export interface AdministrationEventData {
   userName: string; // Target userName
