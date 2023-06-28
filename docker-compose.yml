@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   golden-hammer-shared:
-    container_name: golden-hammer-shared
+    container_name: gh-shared
     image: hangouthere/golden-hammer-shared:latest
     build:
       context: .
