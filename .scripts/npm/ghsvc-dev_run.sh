@@ -1,23 +1,24 @@
 #!/bin/sh
 
+
 DEBUG="$([ "$1" = "debug" ] && echo '-brk' || echo '')"
 
-# SERVICE_NAME=$SERVICES
-#
-# NODE_ENV=development \
-# EXTERNALS="./node_modules*" \
-# FORCEBUILDONLY=1 \
-# RUNTIMEPLATFORM=node \
-# DIRSRC=./services \
-# FILESRC=$SERVICE_NAME/index.service.mjs \
-# SERVICES=$SERVICE_NAME \ # For molecularjs
-#   npx hh-util_nodemon --exec "npx gh-util_fullBuild && npx ghsvc-dev_run"
+# Sets `OUTDIRSTATIC=dist` so all endpoints will have a consistent static folder, otherwise they'll be placed
+# under `dist/$SERVICES/*` due to default output settings in the hh-builder script
 
-node \
-  --inspect"${DEBUG}="0.0.0.0:9229 \
-  node_modules/moleculer/bin/moleculer-runner.mjs \
-  --config moleculer.config.mjs \
-  --mask="**/*.service.mjs" \
-  --hot
-
-  #--config dist/moleculer.config.mjs \
+NODE_ENV=development \
+EXTERNALS="./node_modules*" \
+FORCEBUILDONLY=1 \
+RUNTIMEPLATFORM=node \
+FILESRC=$SERVICES/index.service.ts \
+DIROUT=dist/$SERVICES \
+OUTDIRSTATIC=dist \
+SERVICEDIR=dist \
+LOGLEVEL=debug \
+npx hh-util_nodemon --exec "\
+  npx hh-builder && \
+  node \
+    --inspect${DEBUG}=0.0.0.0:9229 \
+    node_modules/moleculer/bin/moleculer-runner.mjs \
+    --mask=\"**/*.service.js\" \
+"

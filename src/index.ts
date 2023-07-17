@@ -1,1 +1,1 @@
-export * from './PubSubMessaging';
+export * from './PubSubMessaging/index.js';
