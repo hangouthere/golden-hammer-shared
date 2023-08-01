@@ -1,20 +1,50 @@
+import type { ChatUserstate } from 'tmi.js';
+
+export type Range = {
+  start: number;
+  end: number;
+};
+
+export type UserRoles = (ChatUserstate['user-type'] | 'subscriber')[];
+
+export type URIRange = Range & {
+  uri: string;
+};
+
+export type EmoteRange = Range & {
+  emoteId: string;
+};
+
+export type MessageIterateMetaData = {
+  message: string;
+  uriIndices: URIRange[];
+  emoteIndices: EmoteRange[];
+};
+
+export type WordChunkIterateMetaData = {
+  uriIndices: URIRange[];
+  emoteIndices: EmoteRange[];
+  msgIdx: number;
+  charOffset: number;
+  wordChunk: string;
+};
+
 export interface EmoteMeta {
   emoteId: string;
   uri: string;
 }
 
-export interface MessageBuffer {
-  // TODO: Consider UTF-8/etc extraction(s)?
-  type: 'word' | 'emote' | 'uri';
+export type MessageChunk = {
+  type: 'emote' | 'uri' | 'word';
   content: string;
   meta?: EmoteMeta;
-}
+};
 
-export interface UserChatEventData {
+export type UserChatMessageNormalizedData = {
   userName: string;
-  userId?: string; // Not on join/part
-  messageId?: string; // Not on join/part
-  roles?: string[]; // 'mod', 'sub', 'DiscordRoleName'
-  messageBuffers?: MessageBuffer[];
+  userId?: ChatUserstate['user-id']; // Not on join/part
+  messageId?: ChatUserstate['id']; // Not on join/part
+  roles?: UserRoles;
+  messageBuffers?: MessageChunk[];
   presence?: string | boolean; // indicates presence on a platform (ie, join|part, online|offline (as bool))
-}
+};

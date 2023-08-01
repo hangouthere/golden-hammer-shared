@@ -1,14 +1,14 @@
-import { type UserChatEventData } from './UserChatEventData.js';
+import { type UserChatMessageNormalizedData } from './UserChatEventData.js';
 
-export interface AdministrationEventData {
-  userName: string; // Target userName
-  roles?: string[]; // 'mod', 'sub', 'DiscordRoleName'
-  removedMessage?: string; // Message that was removed
-  targetId?: string; // Depends on subCategory| Timeout=userId, Ban=userId, MessageRemoval=messageId
-  duration?: number; // If a duration is associated, we store it here
+export interface AdministrationNormalizedData {
+  userName: string;
+  roles?: string[];
+  removedMessage?: string;
+  targetId?: string;
+  duration?: number;
 }
 
-export interface MonetizationEventData {
+export interface MonetizationNormalizedData {
   sourceUserName: string;
   targetUserName?: string;
   duration?: number;
@@ -16,4 +16,8 @@ export interface MonetizationEventData {
   message?: string;
 }
 
-export type EventDataTypes = null | AdministrationEventData | MonetizationEventData | UserChatEventData;
+export type NormalizedEventDataTypes =
+  | null
+  | AdministrationNormalizedData
+  | MonetizationNormalizedData
+  | UserChatMessageNormalizedData;
