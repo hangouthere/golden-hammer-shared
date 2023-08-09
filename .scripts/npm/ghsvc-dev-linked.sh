@@ -8,6 +8,6 @@
 npx hh-util_clean && \
 npx concurrently \
   --names 'Link hh-util,Link gh-shared,Dev' \
-  'npx hh-util_triggerWatch --no-save' \
+  'npx hh-util_triggerWatch' \
   'npx ghsvc-util_triggerWatch' \
   "npx ghsvc-dev_run $*"
